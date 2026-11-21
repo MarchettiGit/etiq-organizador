@@ -1,0 +1,99 @@
+{
+  "typography": {
+    "primary_font": "Manrope",
+    "secondary_font": "IBM Plex Sans",
+    "rules": {
+      "headings": "font-bold tracking-tight text-slate-900 font-['Manrope']",
+      "body": "text-base text-slate-700 leading-relaxed font-['IBM_Plex_Sans']",
+      "labels": "text-xs font-semibold uppercase tracking-wider text-slate-500",
+      "data": "font-mono text-sm text-slate-800"
+    }
+  },
+  "colors": {
+    "background": "bg-slate-50",
+    "surface": "bg-white",
+    "primary": "bg-blue-600 hover:bg-blue-700 text-white",
+    "secondary": "bg-slate-100 hover:bg-slate-200 text-slate-900",
+    "border": "border-slate-200",
+    "text_primary": "text-slate-900",
+    "text_secondary": "text-slate-600",
+    "status": {
+      "success": "bg-emerald-100 text-emerald-800 border-emerald-200",
+      "warning": "bg-amber-100 text-amber-800 border-amber-200",
+      "error": "bg-red-100 text-red-800 border-red-200",
+      "info": "bg-blue-100 text-blue-800 border-blue-200"
+    }
+  },
+  "visual enhancers": {
+    "shadows": {
+      "card": "shadow-sm",
+      "hover": "shadow-md transition-shadow duration-200",
+      "dropdown": "shadow-lg"
+    },
+    "borders": {
+      "radius": "rounded-lg",
+      "style": "border border-slate-200"
+    },
+    "textures": "Keep it clean and flat to maximize legibility and reduce visual noise for warehouse workers."
+  },
+  "component usage": {
+    "upload_zone": "Massive drag & drop area. Dashed border (border-2 border-dashed border-slate-300), very light blue background on drag over. Large Lucide UploadCloud icon.",
+    "buttons": "Rounded-lg. High contrast. Large tap targets.",
+    "stats_cards": "Bento-style grid. Flat surface, subtle border, large numbers, clear labels.",
+    "tables": "Dense rows for Review list and History. Alternating row colors (bg-white / bg-slate-50) for easy scanning. Sticky headers.",
+    "inputs": "Clear borders, focus ring (focus:ring-2 focus:ring-blue-500), light background.",
+    "badges": "Use status colors for identifying qualities or review reasons."
+  },
+  "grids": {
+    "stats": "grid-cols-2 md:grid-cols-4 gap-4",
+    "review_list": "grid-cols-1 gap-4",
+    "settings_layout": "grid-cols-1 md:grid-cols-4 gap-8"
+  },
+  "layouts": {
+    "main_container": "max-w-7xl mx-auto p-4 md:p-8 space-y-8",
+    "header": "flex items-center justify-between py-4 border-b border-slate-200 bg-white/90 backdrop-blur-md sticky top-0 z-50 px-4 md:px-8",
+    "section": "bg-white p-6 rounded-xl border border-slate-200 shadow-sm"
+  },
+  "motion": {
+    "hover": "transition-colors duration-200",
+    "focus": "transition-shadow duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+    "entrance": "animate-in fade-in slide-in-from-bottom-4 duration-500",
+    "loading": "Pulse animation for processing states."
+  },
+  "accessibility": {
+    "contrast": "Ensure all text meets WCAG AA standards. Use dark slate for text on light backgrounds.",
+    "focus": "Visible focus rings on all interactive elements.",
+    "aria": "Use aria-live regions for processing status updates. aria-labels on icon-only buttons.",
+    "data_testid": "Add data-testid to all interactive elements, e.g., 'upload-zone', 'organize-button', 'download-button', 'review-select-brand', 'user-name-input'."
+  },
+  "media": "Not applicable. Keep interface minimal and focused on text and data.",
+  "3d libraries": "None. 2D highly legible interface.",
+  "image urls": {},
+  "instructions_to_main_agent": [
+    "Add 'Manrope' and 'IBM Plex Sans' fonts from Google Fonts to index.html.",
+    "Implement routing for 3 main views: 'Início', 'Histórico', and 'Configurações'.",
+    "Create a persistent top navigation bar with the app title, navigation links, and an optional 'Seu nome' input field to track user actions.",
+    "Home View: Implement a large drag & drop file upload zone. Below it, an 'ORGANIZAR ETIQUETAS' button. Show loading state. After processing, display a results bento grid (total pages, identified, classified, to review, percentage).",
+    "Review Section: If labels are not identified, show a list below results with the reason and Shadcn Select dropdowns for Manual Correction (Quality, Color, Brand, Size).",
+    "Add a 'BAIXAR PDF ORGANIZADO' button after review.",
+    "History View: A data table showing file name, user name, date/time, pages processed, classified, and reviewed.",
+    "Settings View: Use vertical tabs to switch between Brands, Colors, Qualities, and Size Rules. Implement basic CRUD interfaces for each.",
+    "Use Shadcn UI components: Card, Button, Input, Select, Table, Badge, Tabs.",
+    "Use Sonner for toast notifications.",
+    "Use Lucide-react for icons.",
+    "Ensure responsive layout but focus primarily on desktop/tablet as it's a warehouse tool."
+  ],
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "Do not converge toward generic outputs; make the tool look premium but highly functional.",
+    "Do not use dark colors as gradients.",
+    "Do not center align the app container. Text should be left-aligned for readability.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (backdrop-blur-md) for sticky headers, never fully transparent over content.",
+    "DO NOT apply universal transition (transition: all). Use specific properties.",
+    "Always use modern button styles with interaction animations & color relevant to the app style.",
+    "NEVER use AI assistant Emoji characters for icons.",
+    "Prioritize using pre-existing components from src/components/ui.",
+    "Add data-testid to all interactive elements.",
+    "Use Sonner for toasts."
+  ]
+}
