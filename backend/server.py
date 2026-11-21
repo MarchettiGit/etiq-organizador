@@ -252,7 +252,8 @@ async def correct_label(job_id: str, idx: int, body: Correction):
     if not 0 <= idx < len(job["labels"]):
         raise HTTPException(404, "Etiqueta não encontrada")
     data = body.model_dump()
-    job["labels"][idx]["manual"] = None if not any(data.values()) else data
+    empty = not any(data[k] for k in ("brand", "quality", "color", "size_value"))
+    job["labels"][idx]["manual"] = None if empty else data
     recompute(job, await get_settings_doc())
     await _save(job)
     return public_job(job)

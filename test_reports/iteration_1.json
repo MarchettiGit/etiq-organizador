@@ -1,0 +1,34 @@
+{
+  "summary": "First test run of Organizador de Etiquetas. Backend: 16/16 pytest pass (job creation with /tmp/e.pdf -> 67 pages/67 labels/63 classified/4 review on pages 36,43,45,67, integrity 67/67; non-PDF and wrong-extension rejected 400; download PDF has 67 pages with page text identical to originals in job.page_order; manual correction moves label review->ok and {} removes it; unknown brand stays in review; settings GET/PUT/reset, duplicate (case-insensitive) and empty lists rejected 400; reversing colors+qualities then reanalyze changes order and reset restores original order; list/delete). Engine report script: 67/67 pages identical, sequence checks SIM. Frontend: upload + organize shows correct stats, 4 review items with reasons, 3 order-quality groups, download gives TEST_ui_organizado.pdf; history lists jobs with user_name, row click opens /resultado/:id; correction dialog (shadcn selects) saves and stats update to 64/3, persisted after reload; settings tabs, color up/down, add/remove, save persists after reload, duplicate save shows toast 'Nome duplicado', reset (window.confirm) restores 27 colors/9 brands; user-name stored in localStorage and shown in history; delete from history works. No functional bugs found.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "PUT /api/jobs/{id}/labels/{idx}", "issue": "Body with only size_unit (e.g. {size_unit:'KG'}) counts as a manual correction (any(values) true) and leaves label in 'Correção manual incompleta' instead of being treated as no correction; size_value=0 is treated as empty. Edge case only (UI always sends full body)."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Header", "issues": ["Sonner toasts at top-right cover the 'Seu nome' user-name input for several seconds after each action (consider bottom-right or top-center)."]},
+      {"screen": "Settings list editor", "issues": ["Adding a duplicate name (e.g. 'gelo') is accepted locally; error only appears on Save. Could validate on add."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_organizador_api.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "Optional: treat correction bodies without brand/quality/color/size_value as 'remove correction'",
+    "Optional: move toaster so it does not overlap user-name input",
+    "Optional: client-side duplicate check when adding settings items"
+  ],
+  "critical_code_review_comments": [
+    "Settings are global; reanalyze uses current settings, so a user editing settings changes everyone's subsequent results (by design, but worth a UI note).",
+    "POST /api/jobs reads up to MAX_UPLOAD_MB fully in memory and processes synchronously in a thread - fine for 8MB, consider limits for large files.",
+    "Temp file cleanup only runs on new upload (cleanup_temp in create_job); files older than 24h remain if no new uploads happen."
+  ],
+  "updated_files": ["/app/backend/tests/test_organizador_api.py"],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "seed_data_creation": "None. Created TEST_ jobs (TEST_e.pdf via pytest, TEST_ui.pdf via UI) were deleted; settings restored with reset. A pre-existing job 'TEST_etiquetas 2.pdf' (user TEST_user, not created by me) was left untouched.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Run backend suite serially: cd /app/backend && python -m pytest tests/test_organizador_api.py -n 0 (it shares one job and mutates global settings; resets settings at end). Upload of /tmp/e.pdf takes ~2s. Reset and delete use window.confirm dialogs. Correction selects are shadcn Select: click trigger data-testid correction-quality/color/brand then get_by_role('option', name=...). Settings list testids: {qualities|colors|brands}-name-i/up-i/down-i/remove-i/new-input/add-button."
+}

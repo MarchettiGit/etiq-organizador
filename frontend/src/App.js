@@ -59,7 +59,7 @@ function App() {
           <Route path="/resultado/:id" element={<JobPage />} />
         </Routes>
       </main>
-      <Toaster richColors position="top-right" />
+      <Toaster richColors position="bottom-right" />
     </BrowserRouter>
   );
 }
